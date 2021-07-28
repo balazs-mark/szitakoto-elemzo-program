@@ -1,12 +1,12 @@
 #!/usr/bin/ python
 # -*- coding: utf-8 -*-
 
+from config import Config
 try:
     import requests
 except ImportError:
-    print("\n[-] Hiba: Hiányzó modul!")
-    print("[!] Próbáld meg a 'pip install -r requirements.txt' parancs futtatását!\n")
-from config import Config
+    from modules.error import HandleImportError
+    HandleImportError()
 
 
 class CheckUpdate:

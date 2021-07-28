@@ -16,3 +16,13 @@ class Error:
                 
     def print_could_not_read_filename(self, could_not_read_filename):
         print(f"{Tabulator.tab2}- {could_not_read_filename}")
+
+
+class HandleImportError:
+
+    def __init__(self):
+        from modules.print_developer_and_program_version import print_developer_and_program_version
+        print_developer_and_program_version()
+        print("\n[-] HIBA: Hiányzó modul!")
+        print("[!] Próbáld meg a 'pip install -r requirements.txt' parancs futtatását!\n")
+        exit()

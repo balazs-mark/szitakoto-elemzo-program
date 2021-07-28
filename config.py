@@ -4,4 +4,4 @@
 
 class Config:
     data_source_folder = "tablazatok"
-    version_in_use = "v1.1.1"
+    version_in_use = "v1.1.2"

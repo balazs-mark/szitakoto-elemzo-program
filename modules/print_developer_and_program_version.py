@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 
 
+from config import Config
+
+
 def print_developer_and_program_version():
-    print("""
+    print(f"""
  ______________________________________________________________________________________________________
 |                                                                                                      |
-|     Szitakötő Elemző Program (v1.0.0)                                                                |
+|     Szitakötő Elemző Program ({Config.version_in_use})                                                                |
 |     Legfrisebb verzió letöltése: https://github.com/balazs-mark/szitakoto-elemzo-program             |
 |______________________________________________________________________________________________________|
 |                                                                                                      |

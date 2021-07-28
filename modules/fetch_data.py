@@ -13,17 +13,28 @@ from .tabulator import Tabulator
 from .event import Event
 from .error import Error
 from .events import events
+from config import Config
 
 
 class FetchData:
 
-    def fetch_data_from_data_source_folder(self, data_source_folder):
+    def __init__(self):
+        self.fetch_data_from_data_source_folder()
+
+
+    def fetch_data_from_data_source_folder(self):
+        data_source_folder = Config.data_source_folder
         event_number = 1
         print("\n\n[ ] Fájlok olvasása...")
         current_directory_path = str(os.getcwd())
         path_of_folder_to_fetch = f"{current_directory_path}\\{data_source_folder}\\"
         file_structure.append(f"\nRead files:")
-        folders_in_data_source_folder = os.listdir(path_of_folder_to_fetch)
+        try:
+            folders_in_data_source_folder = os.listdir(path_of_folder_to_fetch)
+        except FileNotFoundError:
+            print(f"\n[-] HIBA: Nem található fájl a '{data_source_folder}' mappában.")
+            print("[!] Kérlek ellenőrizd, hogy megfelelő módon elhelyezted-e az Exel fájlokat!\n")
+            exit()
         for foldername in folders_in_data_source_folder:
             full_path_to_folder = f"{path_of_folder_to_fetch}{foldername}/"
             FileStructure().add_folder(foldername)
@@ -31,8 +42,8 @@ class FetchData:
             self.get_xls_filenames_from_folder(full_path_to_folder, event_number)
             event_number += 1
         if len(file_structure) == 1:
-            print(f"\n[-] Nem olvashatóak adatok a '{data_source_folder}' mappából.".upper())
-            print("[!] Kérlek ellenőrizizd, hogy megfelelő módon elhelyezted-e az Exel fájlokat!\n")
+            print(f"\n[-] HIBA: Nem olvashatóak adatok a '{data_source_folder}' mappából.".upper())
+            print("[!] Kérlek ellenőrizd, hogy megfelelő módon elhelyezted-e az Exel fájlokat!\n")
             exit()
         print("[+] Fájlok beolvasva.")
 

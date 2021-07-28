@@ -8,23 +8,24 @@ from modules.analyze import Analyze
 from modules.error import Error
 from modules.fetch_data import FetchData
 from modules.print_developer_and_program_version import print_developer_and_program_version
+from modules.check_updates import CheckUpdate
 
 
-data_source_folder = "tablazatok"
+class Run:
 
-
-def run():
-    print_developer_and_program_version()
-    FetchData().fetch_data_from_data_source_folder(data_source_folder)
-    try:
-        if command_line_arguments[1] == "--debug":
-            FileStructure().print_more_details_for_debuging()
-    except IndexError:
-        pass
-    Analyze().get_license_plates_in_all_events()
-    Analyze().print_matches()
-    Error().print_errors()
+    def __init__(self):
+        print_developer_and_program_version()
+        CheckUpdate()
+        FetchData()
+        try:
+            if command_line_arguments[1] == "--debug":
+                FileStructure().print_more_details_for_debuging()
+        except IndexError:
+            pass
+        Analyze().get_license_plates_in_all_events()
+        Analyze().print_matches()
+        Error().print_errors()
 
 
 if __name__ == "__main__":
-    run()
+    Run()

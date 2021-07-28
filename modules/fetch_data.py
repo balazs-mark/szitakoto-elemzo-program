@@ -5,8 +5,8 @@
 try:
     import xlrd
 except ImportError:
-    print("\n[-] Hiba: Hiányzó modul!")
-    print("[!] Próbáld meg a 'pip install -r requirements.txt' parancs futtatását!\n")
+    from modules.error import HandleImportError
+    HandleImportError()
 import os
 from .file_structure import FileStructure, file_structure
 from .tabulator import Tabulator

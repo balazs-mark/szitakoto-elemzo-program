@@ -21,11 +21,8 @@ class GenerateTXT(Config):
 
 
     def check_would_print_into_txt(self):
-        try:
-            if "--txt" in command_line_arguments:
-                self.would_print_into_txt = True
-        except IndexError:
-            pass
+        if "--txt" in command_line_arguments:
+            self.would_print_into_txt = True
 
     
     def generate_text_from_result(self):

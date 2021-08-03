@@ -8,6 +8,8 @@ except ImportError:
     from modules.error import HandleImportError
     HandleImportError()
 import os
+import threading
+from time import sleep
 from .file_structure import FileStructure, file_structure
 from .tabulator import Tabulator
 from .event import Event
@@ -35,12 +37,25 @@ class FetchData:
             print(f"\n[-] HIBA: Nem található fájl a '{data_source_folder}' mappában.")
             print("[!] Kérlek ellenőrizd, hogy megfelelő módon elhelyezted-e az Exel fájlokat!\n")
             exit()
+        threads = list()
         for foldername in folders_in_data_source_folder:
             full_path_to_folder = f"{path_of_folder_to_fetch}{foldername}/"
             FileStructure().add_folder(foldername)
             Event.create_new_event_by_folder(foldername)
-            self.get_xls_filenames_from_folder(full_path_to_folder, event_number)
+            if Config.threading:
+                new_thread = threading.Thread(target=self.get_xls_filenames_from_folder, args=(full_path_to_folder, event_number))
+                threads.append(new_thread)
+                new_thread.start()
+                if Config.debug:
+                    print(f"Thread-{event_number} started for {full_path_to_folder}")
+            elif Config.threading == False:
+                self.get_xls_filenames_from_folder(full_path_to_folder, event_number)
             event_number += 1
+        if Config.threading:
+            for full_path_to_folder, thread in enumerate(threads):
+                thread.join()
+                if Config.debug:
+                    print(thread)
         if len(file_structure) == 1:
             print(f"\n[-] HIBA: Nem olvashatóak adatok a '{data_source_folder}' mappából.".upper())
             print("[!] Kérlek ellenőrizd, hogy megfelelő módon elhelyezted-e az Exel fájlokat!\n")

@@ -20,13 +20,16 @@ class Run:
         CheckThreading().check_threading()
         print_developer_and_program_version()
         CheckUpdate()
-        FetchData()
+        FetchData().fetch_data_from_data_source_folder()
         Debug().print_debug_message()
         Analyze().get_license_plates_in_all_events()
+        Analyze().print_matches()
+        if Analyze.are_matches == False:
+            Analyze().get_much_often_license_plates()
         GenerateTXT()
         GenerateHTML()
-        Analyze().print_matches()
         Error().print_errors()
+        print()
 
 
 if __name__ == "__main__":

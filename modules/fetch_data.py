@@ -8,20 +8,20 @@ except ImportError:
     from modules.error import HandleImportError
     HandleImportError()
 import os
+from sys import path
 import threading
-from time import sleep
 from .file_structure import FileStructure, file_structure
 from .tabulator import Tabulator
 from .event import Event
 from .error import Error
 from .events import events
 from config import Config
+from modules.license_plate import LicensePlate
 
 
 class FetchData:
 
-    def __init__(self):
-        self.fetch_data_from_data_source_folder()
+    all_license_plates = []
 
 
     def fetch_data_from_data_source_folder(self):
@@ -78,8 +78,7 @@ class FetchData:
                     Error().files_could_not_read.append(f"{full_path_to_folder}/{filename}")
 
 
-    @staticmethod
-    def get_content_of_exel_file(path_to_exel_file, event_number):
+    def get_content_of_exel_file(self, path_to_exel_file, event_number):
         exel_file_content = xlrd.open_workbook(path_to_exel_file)
         number_of_sheets = 0
         for sheet_name in exel_file_content.sheet_names():
@@ -94,8 +93,18 @@ class FetchData:
                 column_of_license_plate = 3
                 title_of_column = "rendszám"
                 license_plate_in_the_row = sheet_content.cell_value(rowx=row_number, colx=column_of_license_plate)
-                if license_plate_in_the_row not in events[event_index_number].license_plates:
-                    license_plates_in_sheet.append(license_plate_in_the_row)
-            license_plates_in_sheet.remove(title_of_column)
+                if license_plate_in_the_row != title_of_column:
+                    self.add_license_plate_to_all_license_plates(license_plate_in_the_row, events[event_index_number].name)
+                    if license_plate_in_the_row not in events[event_index_number].license_plates:
+                        license_plates_in_sheet.append(license_plate_in_the_row)
             events[event_index_number].license_plates.extend(license_plates_in_sheet)
             sheet_index += 1
+
+
+    def add_license_plate_to_all_license_plates(self, license_plate_number:str, name_of_containing_event:str):
+        for item in self.all_license_plates:
+            if item.license_plate_number == license_plate_number:
+                item.names_of_containing_events.append(name_of_containing_event)
+                return
+        new_license_plate = LicensePlate(license_plate_number=license_plate_number, names_of_containing_events=[name_of_containing_event])
+        self.all_license_plates.append(new_license_plate)

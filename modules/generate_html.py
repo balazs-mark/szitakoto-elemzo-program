@@ -14,7 +14,7 @@ class GenerateHTML(Config):
         self.result_html = ""
         self.check_would_print_into_html()
         if self.would_print_into_html:
-            print("[ ] HTML fájl generálása...")
+            print("\n[ ] HTML fájl generálása...")
             self.generate_html_from_result()
             self.print_into_html()
             print("[+] A HTML fájl elkészült.")
@@ -34,10 +34,14 @@ class GenerateHTML(Config):
     </head>
     <body style="margin:3rem";>
         <h1 style="text-decoration: underline; font-weight: bold;">Találatok:</h1>
-        <ul>\n"""
-        for license_plate in Analyze.license_plates_in_all_events:
-            self.result_html = self.result_html + f"\t\t\t<li>{license_plate}</li>\n"
-        self.result_html = self.result_html + "\t\t</ul>\n\t</body>\n</html>"
+        <table>\n"""
+        if Analyze.are_matches:
+            for license_plate in Analyze.license_plates_in_all_events:
+                self.result_html = self.result_html + f"\t\t\t<tr><td>{license_plate}</td></tr>\n"
+        elif Analyze.are_matches == False and Analyze.is_fetched_by_often:
+            for item in Analyze.all_license_plates_ordered_by_often:
+                self.result_html = self.result_html + f"\t\t\t<tr><td>{item.license_plate_number}</td><td>{len(item.names_of_containing_events)} eseményben:</td><td>{item.names_of_containing_events}</td></tr>\n"
+        self.result_html = self.result_html + "\t\t</table>\n\t</body>\n</html>"
     
     
     def print_into_html(self):

@@ -1,7 +1,7 @@
 <h1>Szitakötő Elemző Program</h1>
 
 <h2>Leírás:</h2>
-<p>A program a Szitakötő rendszerből kimentett nagyobb mennyiségű adatok elemzésére készült, melyeket az Microsoft Exel már nem tud feldolgozni, azonban alkalmas a kisebb adatmennyiségek elemzésére is.</p>
+<p>A program a Szitakötő rendszerből kimentett nagyobb mennyiségű adatok elemzésére készült, melyeket az Microsoft Excel már nem tud feldolgozni, azonban alkalmas a kisebb adatmennyiségek elemzésére is.</p>
 
 <h2>Telepítés:</h2>
   <ul>

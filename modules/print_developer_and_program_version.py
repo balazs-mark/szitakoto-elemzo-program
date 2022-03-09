@@ -15,8 +15,8 @@ def print_developer_and_program_version():
 |                                                                                                      |
 |     Hiba vagy további képesség kérése esetén kérlek vedd fel a kapcsolatot a fejlesztővel:           |
 |                                                                                                      |
-|         Márk Balázs r. ftőrm.                                                                        |
-|         BRFK FFO KBEO                                                                                |
+|         Márk Balázs r. hdgy.                                                                         |
+|         BRFK BÜFO KBEO                                                                               |
 |         06-20/563-10-12                                                                              |
 |         markb@budapest.police.hu                                                                     |
 |______________________________________________________________________________________________________|
